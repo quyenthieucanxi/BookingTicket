@@ -13,6 +13,6 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken = default)
     {
-        return await FindAsync(u => u.Email == email) is null;
+        return await FindAsync(u => u.Email == email,cancellationToken) is null;
     }
 }

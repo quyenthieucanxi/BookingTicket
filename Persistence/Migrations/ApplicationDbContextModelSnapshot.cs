@@ -359,14 +359,15 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("SeatNumber")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                    b.Property<Guid>("SeatId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookingId");
+
+                    b.HasIndex("SeatId")
+                        .IsUnique();
 
                     b.ToTable("Tickets");
                 });
@@ -609,14 +610,14 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7d5c108d-53b4-46d4-93fe-e5fa44aadb0a"),
+                            Id = new Guid("6aa2d54c-8b2c-4e2a-9ce1-7a0c1b1d2555"),
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("83fab4fe-27ec-4fdc-9a82-b90dda084eed"),
+                            Id = new Guid("0c9e0c78-e0ec-46b3-b510-d7754d5be8dd"),
                             ConcurrencyStamp = "5",
                             Name = "User",
                             NormalizedName = "USER"
@@ -710,7 +711,15 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Seat", "Seat")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Ticket", "SeatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Booking");
+
+                    b.Navigation("Seat");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

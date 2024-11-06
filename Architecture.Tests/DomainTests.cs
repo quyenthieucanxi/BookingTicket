@@ -13,8 +13,8 @@ public class DomainTests
         var assembly = typeof(Domain.AssemblyReference).Assembly ;
         
         //Act
-        var result = Types.InAssembly(assembly).
-                That()
+        var result = Types.InAssembly(assembly)
+            .That()
             .ImplementInterface(typeof(IDomainEvent))
             .Should()
             .ResideInNamespace(nameof(Domain.Entities))

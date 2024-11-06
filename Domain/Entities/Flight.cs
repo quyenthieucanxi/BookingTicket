@@ -7,6 +7,26 @@ public sealed class Flight : AggregateRoot<FlightId>
 {
     private readonly List<Booking> _bookings = new();
     private readonly List<Seat> _seat = new();
+
+    private Flight(FlightId id) : base(id)
+    {
+    }
+
+    private Flight(FlightId id, string flightNumber, 
+        DateTime departureTime, DateTime arrivalTime, 
+        decimal price, int duration, AirportId originAirportId,
+        AirportId destinationAirportId, AirlineId airlineId) : base(id)
+    {
+        FlightNumber = flightNumber;
+        DepartureTime = departureTime;
+        ArrivalTime = arrivalTime;
+        Price = price;
+        Duration = duration;
+        OriginAirportId = originAirportId;
+        DestinationAirportId = destinationAirportId;
+        AirlineId = airlineId;
+    }
+
     public string FlightNumber { get; private set; } = default!;
     public DateTime DepartureTime { get; private set; }
     public DateTime ArrivalTime { get; private set; }
@@ -24,5 +44,21 @@ public sealed class Flight : AggregateRoot<FlightId>
     public Airport Origin { get; private set; }
     public Airport Destination { get; private set; } 
     public Airline Airline { get; private set; }
+
+    public static Flight Create(FlightId id, string flightNumber,
+        DateTime departureTime, DateTime arrivalTime, 
+        decimal price, int duration, AirportId originAirportId,
+        AirportId destinationAirportId, AirlineId airlineId)
+    {
+        return new(id, flightNumber, departureTime,
+            arrivalTime, price, 
+            duration, originAirportId, destinationAirportId,
+            airlineId);
+    }
+
+    public void AddSeat(Seat seat)
+    {
+        _seat.Add(seat);
+    }
     
 }

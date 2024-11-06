@@ -1,4 +1,5 @@
 using Application.Abstractions;
+using Application.Bookings.Events;
 using Application.DependencyInjection.Extensions;
 using Carter;
 using Domain.Abstractions;
@@ -7,13 +8,18 @@ using Domain.ValueObjects;
 using Infrastructure.Authentication;
 using Infrastructure.BackgroundJobs;
 using Infrastructure.DependencyInjection.Extensions;
+using Infrastructure.MessageBroker;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using Persistence.Data;
 using Persistence.Interceptors;
+using Presentation.Middleware;
 using Presentation.OptionsSetup;
 using Quartz;
 
@@ -50,18 +56,47 @@ builder.Services.AddSwaggerGen(
             }
         });
     });
+builder.Services.AddSingleton<AddOrUpdateAuditableEntitiesInterceptor>();
+builder.Services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
 builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
 {
-    var interceptor = sp.GetService<ConvertDomainEventsToOutboxMessagesInterceptor>();
+    var outBoxMessagesInterceptor = sp.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
+    var addOrUpdateInterceptor = sp.GetRequiredService<AddOrUpdateAuditableEntitiesInterceptor>();
     options.UseNpgsql(builder.Configuration.GetConnectionString("Application"))
-        .AddInterceptors(interceptor!);
-});
+        .AddInterceptors(addOrUpdateInterceptor!,outBoxMessagesInterceptor!);
+}); 
 
 builder.Services.AddStackExchangeRedisCache(redisOptions =>
 {
     var connection = builder.Configuration.GetConnectionString("Redis");
-    redisOptions.Configuration = connection;    
+    redisOptions.Configuration = connection;   
 });
+
+builder.Services.Configure<MessageBrokerSettings>(
+    builder.Configuration.GetSection("MessageBroker"));
+
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<MessageBrokerSettings>>().Value);
+
+builder.Services.AddMassTransit(busConfigurator =>
+    {
+        busConfigurator.SetDefaultEndpointNameFormatter();
+        busConfigurator.AddConsumer<BookingRegisterDomainEventConsumer>();
+        busConfigurator.UsingRabbitMq((context, configrator) =>
+        {
+            configrator.UseNewtonsoftJsonSerializer();  
+            MessageBrokerSettings settings = context.GetRequiredService<MessageBrokerSettings>();
+            configrator.Host(settings.Host,"/", h =>
+            {
+                h.Username(settings.UserName);
+                h.Password(settings.Password);
+            });
+            configrator.ReceiveEndpoint("booking-register-queue", e =>
+            {
+                e.ConfigureConsumer<BookingRegisterDomainEventConsumer>(context); 
+            });
+        });
+    }
+);
 
 builder.Services.AddCarter();
 
@@ -90,12 +125,25 @@ builder.Services.AddQuartzHostedService();
 builder.Services.AddIdentity<User,IdentityRole<Guid>>(options =>
     {
         options.SignIn.RequireConfirmedEmail = true;
+        options.Password.RequireDigit = true;
+        options.Password.RequiredLength = 6;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireLowercase = true;
+        options.SignIn.RequireConfirmedEmail = false;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareHandler>();
+builder.Services.AddCors();
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer();
 builder.Services.AddAuthorization();
 
@@ -107,14 +155,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-app.MapCarter();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapCarter();
 
 
 app.Run();

@@ -4,6 +4,9 @@ using System.Security.Cryptography;
 using System.Text;
 using Application.Abstractions;
 using Domain.Entities;
+using Domain.Shared;
+using Domain.ValueObjects;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -12,9 +15,11 @@ namespace Infrastructure.Authentication;
 public class JwtProvider : IJwtProvider
 {
     private readonly JwtOptions _options;
-
-    public JwtProvider(IOptions<JwtOptions> options)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public JwtProvider(IOptions<JwtOptions> options, 
+        IHttpContextAccessor httpContextAccessor)
     {
+        _httpContextAccessor = httpContextAccessor;
         _options = options.Value;
     }
 
@@ -22,8 +27,8 @@ public class JwtProvider : IJwtProvider
     {
         var claims = new Claim[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, "dadsdsafasdasdasd"),
-            new Claim(JwtRegisteredClaimNames.Email, "congquyen@gmail.com"),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email),
         };
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
         var signingCredentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
@@ -49,5 +54,18 @@ public class JwtProvider : IJwtProvider
             rng.GetBytes(random);
             return Convert.ToBase64String(random);
         }
+    }
+
+    public Result<UserId> Decode()
+    {
+        string? userId = _httpContextAccessor.HttpContext?
+            .User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
+        if (!Guid.TryParse(userId, out Guid parsedUserId))
+        {
+            return Result.Failure<UserId>(new Error("Token", "Token is not valid"));
+        }
+
+        return new UserId(parsedUserId);
+
     }
 }

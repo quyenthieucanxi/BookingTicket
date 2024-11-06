@@ -9,10 +9,12 @@ namespace Infrastructure.Repositories;
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     private readonly ApplicationDbContext _applicationDbContext;
+    public DbSet<TEntity> Entities { get; set; }
 
     public Repository(ApplicationDbContext applicationDbContext)
     {
         _applicationDbContext = applicationDbContext;
+        Entities = _applicationDbContext.Set<TEntity>();
     }
 
     public void Add(TEntity entity)
@@ -31,21 +33,21 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         _applicationDbContext.Set<TEntity>().AddRange(entities);
     }
     
-    public async Task<TEntity?> GetByIdAsync(object id,string[]? includes = null)
+    public async Task<TEntity?> GetByIdAsync(object id,CancellationToken  cancellationToken,string[]? includes = null)
     {
-        return await _applicationDbContext.Set<TEntity>().FindAsync(id);
+        return await _applicationDbContext.Set<TEntity>().FindAsync(id,cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(string[]? includes = null)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken  cancellationToken,string[]? includes = null)
     {
         IQueryable<TEntity> query = _applicationDbContext.Set<TEntity>();
         if (includes != null)
             foreach (var incluse in includes)
                 query = query.Include(incluse);
-        return await query.ToListAsync();
+        return await query.ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> criteria, string[]? includes = null)
+    public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> criteria,CancellationToken  cancellationToken, string[]? includes = null)
     {
         IQueryable<TEntity> query = _applicationDbContext.Set<TEntity>();
 
@@ -53,10 +55,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             foreach (var incluse in includes)
                 query = query.Include(incluse);
             
-        return await query.SingleOrDefaultAsync(criteria);
+        return await query.SingleOrDefaultAsync(criteria,cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, string[]? includes = null)
+    public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria,CancellationToken  cancellationToken, string[]? includes = null)
     {
         IQueryable<TEntity> query = _applicationDbContext.Set<TEntity>();
 
@@ -64,19 +66,34 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             foreach (var include in includes)
                 query = query.Include(include);
 
-        return await query.Where(criteria).ToListAsync();
+        return await query.Where(criteria).ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, int take, int skip)
-    {
-        return await _applicationDbContext.Set<TEntity>().Where(criteria).Skip(skip).Take(take).ToListAsync();
-    }
-
-    public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, int? take, int? skip,
-        Expression<Func<TEntity, object>>? orderBy = null,
-        string orderByDirection = OrderBy.Ascending)
+    public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, int take, int skip,CancellationToken  cancellationToken,string[]? includes = null)
     {
         IQueryable<TEntity> query = _applicationDbContext.Set<TEntity>();
+
+        if (includes != null)
+            foreach (var include in includes)
+                query = query.Include(include);
+        return await query.Where(criteria).Skip(skip).Take(take).ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>>? criteria,CancellationToken  cancellationToken,
+        int? take, int? skip,
+        Expression<Func<TEntity, object>>? orderBy = null,
+        string? orderByDirection = OrderBy.Ascending,
+        string[]? includes = null
+        )
+    {
+        IQueryable<TEntity> query = _applicationDbContext.Set<TEntity>();
+        if (includes != null)
+            foreach (var include in includes)
+                query = query.Include(include);
+        if (criteria is not null)
+        {
+            query = query.Where(criteria);
+        }
         if (orderBy != null)
         {
             if (orderByDirection == OrderBy.Ascending)
@@ -89,7 +106,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
         if (skip.HasValue)
             query = query.Skip(skip.Value);
-        return await query.Where(criteria).ToListAsync();
+        
+        return await query.ToListAsync(cancellationToken);
     }
 
 
@@ -103,14 +121,17 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         _applicationDbContext.Set<TEntity>().UpdateRange(entities);
     }
 
-    public void Remove(Expression<Func<TEntity, bool>> criteria)
+    public async Task Remove(Expression<Func<TEntity, bool>> criteria,CancellationToken cancellationToken)
     {
-        
+        var entity = await FindAsync(criteria,cancellationToken);
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
+        Remove(entity);
     }
 
-    public async Task Remove(Guid id)
+    public async Task Remove(Guid id,CancellationToken cancellationToken)
     {
-        var entity = await GetByIdAsync(id);
+        var entity = await GetByIdAsync(id,cancellationToken);
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
         Remove(entity);

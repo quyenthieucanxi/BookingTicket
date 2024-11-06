@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,14 +20,17 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
             .HasConversion(id => id.Value,
                 id => new(id))
             .ValueGeneratedNever();
-        
-        builder.Property(t => t.SeatNumber)
-            .IsRequired()
-            .HasMaxLength(10);
+
+        builder.Property(t => t.SeatId)
+            .HasConversion(id => id.Value,
+                id => new(id))
+            .ValueGeneratedNever();
 
         builder.Property(t => t.Class)
-            .HasConversion<string>()
-            .IsRequired();
+            .HasConversion(
+                t => t.ToString(),            
+                t => (TicketClass)Enum.Parse(typeof(TicketClass),t) 
+            );
 
         builder.Property(t => t.IssueDate)
             .IsRequired();
@@ -34,5 +38,10 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
         builder.HasOne(t => t.Booking)
             .WithMany(b => b.Tickets)
             .HasForeignKey(t => t.BookingId);
+
+        builder.HasOne(t => t.Seat)
+            .WithOne()
+            .HasForeignKey<Ticket>(t => t.SeatId);
+        
     }
 }

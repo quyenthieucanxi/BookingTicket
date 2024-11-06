@@ -1,11 +1,13 @@
 using System.Collections.Concurrent;
 using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Infrastructure.Caching;
 
-public static class CacheAside
+public  class CacheAside : ICacheAside
 {
+    private readonly ICacheService _cacheService;
     private static DistributedCacheEntryOptions Default = new()
     {
         AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2)
@@ -13,15 +15,19 @@ public static class CacheAside
 
     private static readonly ConcurrentDictionary<string, SemaphoreSlim> KeyLocks = new();
 
-    
-    public static async Task<T?> GetOrCreateAsync<T>(
-        this ICacheService cache,
+    public CacheAside(ICacheService cacheService)
+    {
+        _cacheService = cacheService;
+    }
+
+
+    public  async Task<T?> GetOrCreateAsync<T>(
         string key,
         Func<CancellationToken,Task<T>>factory,
         DistributedCacheEntryOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        T? value = await cache.GetAsync<T>(key, cancellationToken);
+        T? value = await _cacheService.GetAsync<T>(key, cancellationToken);
         if (value is not null)
         {
             return value;
@@ -35,7 +41,7 @@ public static class CacheAside
 
        try
        {
-           value = await cache.GetAsync<T>(key, cancellationToken);
+           value = await _cacheService.GetAsync<T>(key, cancellationToken);
            if (value is not null)
            {
                return value;
@@ -45,7 +51,7 @@ public static class CacheAside
            {
                return default;
            }
-           await cache.SetAsync(key, value, cancellationToken,options ?? Default);
+           await _cacheService.SetAsync(key, value, cancellationToken,options ?? Default);
        }
        finally
        {

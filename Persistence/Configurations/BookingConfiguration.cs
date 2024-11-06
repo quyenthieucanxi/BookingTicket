@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Domain.Enums;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,7 +17,10 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
                 id => new(id))
             .ValueGeneratedNever();
         builder.Property(b => b.Status)
-            .HasConversion<string>();
+            .HasConversion(
+                v => v.ToString(),            
+                v => (BookingStatus)Enum.Parse(typeof(BookingStatus), v) 
+            );
         
         
         builder.Property(b => b.FlightId)

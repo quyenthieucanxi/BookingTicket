@@ -1,9 +1,7 @@
 
-using Application.Abstractions.Messaging;
 using Domain.Shared;
 using FluentValidation;
 using MediatR;
-using ValidationException = Application.Exceptions.ValidationException;
 
 
 namespace Application.Behaviors;

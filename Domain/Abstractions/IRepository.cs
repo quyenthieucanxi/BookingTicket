@@ -9,26 +9,29 @@ public interface IRepository<TEntity> where TEntity: class
 
     void AddRange(IEnumerable<TEntity> entities);
 
-    Task<TEntity?> GetByIdAsync(object id,string[]? includes = null);
+    Task<TEntity?> GetByIdAsync(object id,CancellationToken  cancellationToken,string[]? includes = null);
 
-    Task<IEnumerable<TEntity>> GetAllAsync(string[]? includes = null);
+    Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken  cancellationToken,string[]? includes = null);
 
-    Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> criteria, string[]? includes = null);
+    Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> criteria,CancellationToken  cancellationToken, string[]? includes = null);
 
-    Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, string[]? includes = null);
+    Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria,CancellationToken  cancellationToken, string[]? includes = null);
         
-    Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, int take, int skip);
+    Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, int take, int skip,CancellationToken  cancellationToken,string[]? includes = null);
 
-    Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> criteria, int? take, int? skip,
-        Expression<Func<TEntity, object>>? orderBy = null, string orderByDirection = OrderBy.Ascending);
+    Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>>? criteria,
+        CancellationToken  cancellationToken,
+        int? take, int? skip,
+        Expression<Func<TEntity, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending,
+        string[]? includes = null);
 
     void Update(TEntity entity);
 
     void Update(IEnumerable<TEntity> entities);
 
-    void Remove(Expression<Func<TEntity, bool>> criteria);
+    Task Remove(Expression<Func<TEntity, bool>> criteria,CancellationToken cancellationToken);
 
-    Task Remove(Guid id);
+    Task Remove(Guid id,CancellationToken cancellationToken);
 
     void Remove(TEntity entity);
     
