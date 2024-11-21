@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XCh3+Pkesj1PBzyWune0+taUcbFuJLcBdku0pzboNDll6surnk1OsrvgJCg8BZ4jnlPdR5SOsP3xF8kdyXBF5w==",
+  "dgSpecHash": "b30w9pKat1tn6SROU/Ty76tvUd61Coi6nYEAy39gS3wMYopr0jr+VPqEcLWlN4Pcum09IPtRy1Afld2Vfub/jA==",
   "success": true,
   "projectFilePath": "/Users/quyen/dev/BookingTicket/Infrastructure/Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -61,7 +61,9 @@
     "/Users/quyen/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "/Users/quyen/.nuget/packages/system.text.encoding/4.3.0/system.text.encoding.4.3.0.nupkg.sha512",
     "/Users/quyen/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
-    "/Users/quyen/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512"
+    "/Users/quyen/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512",
+    "/Users/quyen/.nuget/packages/microsoft.netcore.app.ref/6.0.36/microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "/Users/quyen/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.36/microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512"
   ],
   "logs": []
 }

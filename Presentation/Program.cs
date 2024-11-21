@@ -5,6 +5,7 @@ using Carter;
 using Domain.Abstractions;
 using Domain.Entities;
 using Domain.ValueObjects;
+using HealthChecks.UI.Client;
 using Infrastructure.Authentication;
 using Infrastructure.BackgroundJobs;
 using Infrastructure.DependencyInjection.Extensions;
@@ -12,6 +13,7 @@ using Infrastructure.MessageBroker;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -66,10 +68,10 @@ builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
         .AddInterceptors(addOrUpdateInterceptor!,outBoxMessagesInterceptor!);
 }); 
 
+var redisConnection = builder.Configuration.GetConnectionString("Redis");
 builder.Services.AddStackExchangeRedisCache(redisOptions =>
 {
-    var connection = builder.Configuration.GetConnectionString("Redis");
-    redisOptions.Configuration = connection;   
+    redisOptions.Configuration = redisConnection;   
 });
 
 builder.Services.Configure<MessageBrokerSettings>(
@@ -146,6 +148,10 @@ builder.Services.AddAuthentication(options =>
     })
     .AddJwtBearer();
 builder.Services.AddAuthorization();
+builder.Services.AddHealthChecks()
+    .AddRedis(redisConnection)
+    .AddNpgSql(builder.Configuration.GetConnectionString("Application"))
+    .AddDbContextCheck<ApplicationDbContext>();
 
 
 
@@ -166,5 +172,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapCarter();
 
+app.MapHealthChecks("/health",
+new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+});
 
 app.Run();

@@ -8,10 +8,11 @@
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.AssemblyInfoInputs.cache
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.AssemblyInfo.cs
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.csproj.CoreCompileInputs.cache
-/Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.csproj.CopyComplete
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.dll
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/refint/Persistence.dll
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.pdb
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/ref/Persistence.dll
 /Users/quyen/dev/BookingTicket/Persistence/bin/Debug/net6.0/Persistence.runtimeconfig.json
 /Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.genruntimeconfig.cache
+/Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persistence.sourcelink.json
+/Users/quyen/dev/BookingTicket/Persistence/obj/Debug/net6.0/Persiste.61C28332.Up2Date

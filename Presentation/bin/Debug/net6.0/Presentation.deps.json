@@ -9,6 +9,9 @@
       "Presentation/1.0.0": {
         "dependencies": {
           "Application": "1.0.0",
+          "AspNetCore.HealthChecks.NpgSql": "6.0.2",
+          "AspNetCore.HealthChecks.Redis": "6.0.4",
+          "AspNetCore.HealthChecks.UI.Client": "6.0.5",
           "Carter": "6.1.1",
           "Domain": "1.0.0",
           "Infrastructure": "1.0.0",
@@ -19,12 +22,64 @@
           "Microsoft.EntityFrameworkCore": "7.0.10",
           "Microsoft.EntityFrameworkCore.Design": "7.0.10",
           "Microsoft.Extensions.Caching.StackExchangeRedis": "6.0.33",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.26",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "6.0.11",
           "Persistence": "1.0.0",
           "Quartz.Extensions.Hosting": "3.13.0",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
           "Presentation.dll": {}
+        }
+      },
+      "AspNetCore.HealthChecks.NpgSql/6.0.2": {
+        "dependencies": {
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.26",
+          "Npgsql": "7.0.2"
+        },
+        "runtime": {
+          "lib/net6.0/HealthChecks.NpgSql.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.2.0"
+          }
+        }
+      },
+      "AspNetCore.HealthChecks.Redis/6.0.4": {
+        "dependencies": {
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.26",
+          "StackExchange.Redis": "2.5.61"
+        },
+        "runtime": {
+          "lib/net6.0/HealthChecks.Redis.dll": {
+            "assemblyVersion": "6.0.4.0",
+            "fileVersion": "6.0.4.0"
+          }
+        }
+      },
+      "AspNetCore.HealthChecks.UI.Client/6.0.5": {
+        "dependencies": {
+          "AspNetCore.HealthChecks.UI.Core": "6.0.5",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.26"
+        },
+        "runtime": {
+          "lib/net6.0/HealthChecks.UI.Client.dll": {
+            "assemblyVersion": "6.0.5.0",
+            "fileVersion": "6.0.5.0"
+          }
+        }
+      },
+      "AspNetCore.HealthChecks.UI.Core/6.0.5": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.10",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.26",
+          "System.Text.Json": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/HealthChecks.UI.Core.dll": {
+            "assemblyVersion": "6.0.5.0",
+            "fileVersion": "6.0.5.0"
+          }
         }
       },
       "Carter/6.1.1": {
@@ -72,7 +127,7 @@
         "dependencies": {
           "MassTransit.Abstractions": "8.2.4",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
-          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.1",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.26",
           "Microsoft.Extensions.Hosting.Abstractions": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.0",
           "Microsoft.Extensions.Options": "7.0.0"
@@ -284,7 +339,7 @@
         "dependencies": {
           "Microsoft.Extensions.Caching.Abstractions": "7.0.0",
           "Microsoft.Extensions.Options": "7.0.0",
-          "StackExchange.Redis": "2.2.4"
+          "StackExchange.Redis": "2.5.61"
         },
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Caching.StackExchangeRedis.dll": {
@@ -335,9 +390,9 @@
           }
         }
       },
-      "Microsoft.Extensions.Diagnostics.HealthChecks/6.0.1": {
+      "Microsoft.Extensions.Diagnostics.HealthChecks/6.0.26": {
         "dependencies": {
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "6.0.1",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "6.0.26",
           "Microsoft.Extensions.Hosting.Abstractions": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.0",
           "Microsoft.Extensions.Options": "7.0.0"
@@ -345,15 +400,28 @@
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.121.56714"
+            "fileVersion": "6.0.2623.60506"
           }
         }
       },
-      "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions/6.0.1": {
+      "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions/6.0.26": {
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.121.56714"
+            "fileVersion": "6.0.2623.60506"
+          }
+        }
+      },
+      "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore/6.0.11": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.10",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "6.0.26",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "6.0.26"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll": {
+            "assemblyVersion": "6.0.11.0",
+            "fileVersion": "6.0.1122.52304"
           }
         }
       },
@@ -612,14 +680,14 @@
           }
         }
       },
-      "Pipelines.Sockets.Unofficial/2.2.0": {
+      "Pipelines.Sockets.Unofficial/2.2.2": {
         "dependencies": {
-          "System.IO.Pipelines": "5.0.0"
+          "System.IO.Pipelines": "5.0.1"
         },
         "runtime": {
           "lib/net5.0/Pipelines.Sockets.Unofficial.dll": {
             "assemblyVersion": "1.0.0.0",
-            "fileVersion": "2.2.0.45337"
+            "fileVersion": "2.2.2.34088"
           }
         }
       },
@@ -683,15 +751,15 @@
           }
         }
       },
-      "StackExchange.Redis/2.2.4": {
+      "StackExchange.Redis/2.5.61": {
         "dependencies": {
-          "Pipelines.Sockets.Unofficial": "2.2.0",
+          "Pipelines.Sockets.Unofficial": "2.2.2",
           "System.Diagnostics.PerformanceCounter": "5.0.0"
         },
         "runtime": {
           "lib/net5.0/StackExchange.Redis.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.2.4.27433"
+            "fileVersion": "2.5.61.22961"
           }
         }
       },
@@ -812,7 +880,7 @@
           }
         }
       },
-      "System.IO.Pipelines/5.0.0": {},
+      "System.IO.Pipelines/5.0.1": {},
       "System.Memory/4.5.5": {},
       "System.Runtime/4.3.0": {
         "dependencies": {
@@ -933,7 +1001,10 @@
           "Microsoft.AspNetCore.Identity.UI": "6.0.26"
         },
         "runtime": {
-          "Application.dll": {}
+          "Application.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Domain/1.0.0": {
@@ -942,7 +1013,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.26"
         },
         "runtime": {
-          "Domain.dll": {}
+          "Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Infrastructure/1.0.0": {
@@ -955,7 +1029,10 @@
           "Scrutor": "3.3.0"
         },
         "runtime": {
-          "Infrastructure.dll": {}
+          "Infrastructure.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Persistence/1.0.0": {
@@ -967,7 +1044,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.3"
         },
         "runtime": {
-          "Persistence.dll": {}
+          "Persistence.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
@@ -977,6 +1057,34 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AspNetCore.HealthChecks.NpgSql/6.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TFCpst67meE/GcOVf1f55PuKtvYKNyvqTZonLO6taEwsONNup0WKbpKf8BaAAa4Oe5epgne+iTd+K3ljL4lYnw==",
+      "path": "aspnetcore.healthchecks.npgsql/6.0.2",
+      "hashPath": "aspnetcore.healthchecks.npgsql.6.0.2.nupkg.sha512"
+    },
+    "AspNetCore.HealthChecks.Redis/6.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-adNNWF6kV8v1HLTmF3b9F5K6ubvgx+S7VqhzA8T/5YuIpRWsCDk8+q3RIDDV8Twvl9pRahLfzCbFrPYxvzmk7g==",
+      "path": "aspnetcore.healthchecks.redis/6.0.4",
+      "hashPath": "aspnetcore.healthchecks.redis.6.0.4.nupkg.sha512"
+    },
+    "AspNetCore.HealthChecks.UI.Client/6.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ko4CM9lI3ZklTDW3LRtHoiDU/Soo/r3yYRM28jbvOGaN5MjkWYGtVFwkwuNcjLFkJoFxfjqjITf+TWEqNENBzA==",
+      "path": "aspnetcore.healthchecks.ui.client/6.0.5",
+      "hashPath": "aspnetcore.healthchecks.ui.client.6.0.5.nupkg.sha512"
+    },
+    "AspNetCore.HealthChecks.UI.Core/6.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CofYy5BJzODAKcZvpAODUhm11M/mtPhIcnGlqMip3H3adzfjpXHDJlbgZNBmua7ds85D+atEBsPvlcR4mQY92g==",
+      "path": "aspnetcore.healthchecks.ui.core/6.0.5",
+      "hashPath": "aspnetcore.healthchecks.ui.core.6.0.5.nupkg.sha512"
     },
     "Carter/6.1.1": {
       "type": "package",
@@ -1188,19 +1296,26 @@
       "path": "microsoft.extensions.dependencymodel/7.0.0",
       "hashPath": "microsoft.extensions.dependencymodel.7.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Diagnostics.HealthChecks/6.0.1": {
+    "Microsoft.Extensions.Diagnostics.HealthChecks/6.0.26": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-WdiVqAFrY40eNgtmtMHrXdrE1DwndwpzmWcN21lezRF+zqzWxZ83P9tJjwT0x6MgVx7iDOu4szxK/LDeC5YWEA==",
-      "path": "microsoft.extensions.diagnostics.healthchecks/6.0.1",
-      "hashPath": "microsoft.extensions.diagnostics.healthchecks.6.0.1.nupkg.sha512"
+      "sha512": "sha512-+fDJ2/Z6Qcp3GFBJaJLRVZFj4R9hmKiSPAfD1W0AgZYnG4w1ScyFndyOQL/XLIT6RUDpDsUU0+t5NFfHv3POaw==",
+      "path": "microsoft.extensions.diagnostics.healthchecks/6.0.26",
+      "hashPath": "microsoft.extensions.diagnostics.healthchecks.6.0.26.nupkg.sha512"
     },
-    "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions/6.0.1": {
+    "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions/6.0.26": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-hXBOIVVsCsrehsZanu9UVzHZzOUM+3hCLXp8PBlZutv2xeCrw5fKh6mpX14lqfYewWLpARt2jFpbHhtaRhRt+Q==",
-      "path": "microsoft.extensions.diagnostics.healthchecks.abstractions/6.0.1",
-      "hashPath": "microsoft.extensions.diagnostics.healthchecks.abstractions.6.0.1.nupkg.sha512"
+      "sha512": "sha512-FXqMfdRnn9ru46CwSPUVtqTHo8qG5Dk1LQpddBrTqDOmxZQoJFK5/4U6inhxE1p464MbrkDVefwRUpzsq54e6Q==",
+      "path": "microsoft.extensions.diagnostics.healthchecks.abstractions/6.0.26",
+      "hashPath": "microsoft.extensions.diagnostics.healthchecks.abstractions.6.0.26.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore/6.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tMjF1erFhHE+SnsiIyRIatVeKBgB9OfGsOvQe/+foE0xl4+JUQGbCA7gF1wqOksi9AxmGWzqtqjsMKJpCo5wYQ==",
+      "path": "microsoft.extensions.diagnostics.healthchecks.entityframeworkcore/6.0.11",
+      "hashPath": "microsoft.extensions.diagnostics.healthchecks.entityframeworkcore.6.0.11.nupkg.sha512"
     },
     "Microsoft.Extensions.FileProviders.Abstractions/6.0.0": {
       "type": "package",
@@ -1377,12 +1492,12 @@
       "path": "npgsql.entityframeworkcore.postgresql/7.0.3",
       "hashPath": "npgsql.entityframeworkcore.postgresql.7.0.3.nupkg.sha512"
     },
-    "Pipelines.Sockets.Unofficial/2.2.0": {
+    "Pipelines.Sockets.Unofficial/2.2.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-7hzHplEIVOGBl5zOQZGX/DiJDHjq+RVRVrYgDiqXb6RriqWAdacXxp+XO9WSrATCEXyNOUOQg9aqQArsjase/A==",
-      "path": "pipelines.sockets.unofficial/2.2.0",
-      "hashPath": "pipelines.sockets.unofficial.2.2.0.nupkg.sha512"
+      "sha512": "sha512-Bhk0FWxH1paI+18zr1g5cTL+ebeuDcBCR+rRFO+fKEhretgjs7MF2Mc1P64FGLecWp4zKCUOPzngBNrqVyY7Zg==",
+      "path": "pipelines.sockets.unofficial/2.2.2",
+      "hashPath": "pipelines.sockets.unofficial.2.2.2.nupkg.sha512"
     },
     "Quartz/3.13.0": {
       "type": "package",
@@ -1419,12 +1534,12 @@
       "path": "scrutor/3.3.0",
       "hashPath": "scrutor.3.3.0.nupkg.sha512"
     },
-    "StackExchange.Redis/2.2.4": {
+    "StackExchange.Redis/2.5.61": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wM0OuRyRaZTFndFRjIOvas4jjkeclRJsmNm0eAx5tOju3SQisrLubNaSFT/dBypi4Vh1n7nYc1gWpw9L7ernOg==",
-      "path": "stackexchange.redis/2.2.4",
-      "hashPath": "stackexchange.redis.2.2.4.nupkg.sha512"
+      "sha512": "sha512-h1Gz4itrHL/PQ0GBLTEiPK8bBkOp5SFO6iaRFSSn/x1qltBWENsz/NUxPid6WHX9yf2Tiyzn9D3R7mtnksODxg==",
+      "path": "stackexchange.redis/2.5.61",
+      "hashPath": "stackexchange.redis.2.5.61.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.2.3": {
       "type": "package",
@@ -1489,12 +1604,12 @@
       "path": "system.identitymodel.tokens.jwt/6.35.0",
       "hashPath": "system.identitymodel.tokens.jwt.6.35.0.nupkg.sha512"
     },
-    "System.IO.Pipelines/5.0.0": {
+    "System.IO.Pipelines/5.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-irMYm3vhVgRsYvHTU5b2gsT2CwT/SMM6LZFzuJjpIvT5Z4CshxNsaoBC1X/LltwuR3Opp8d6jOS/60WwOb7Q2Q==",
-      "path": "system.io.pipelines/5.0.0",
-      "hashPath": "system.io.pipelines.5.0.0.nupkg.sha512"
+      "sha512": "sha512-qEePWsaq9LoEEIqhbGe6D5J8c9IqQOUuTzzV6wn1POlfdLkJliZY3OlB0j0f17uMWlqZYjH7txj+2YbyrIA8Yg==",
+      "path": "system.io.pipelines/5.0.1",
+      "hashPath": "system.io.pipelines.5.0.1.nupkg.sha512"
     },
     "System.Memory/4.5.5": {
       "type": "package",

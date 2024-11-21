@@ -8,8 +8,9 @@
 /Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Application.AssemblyInfoInputs.cache
 /Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Application.AssemblyInfo.cs
 /Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Application.csproj.CoreCompileInputs.cache
-/Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Application.csproj.CopyComplete
 /Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Application.dll
 /Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/refint/Application.dll
 /Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Application.pdb
 /Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/ref/Application.dll
+/Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Application.sourcelink.json
+/Users/quyen/dev/BookingTicket/Application/obj/Debug/net6.0/Applicat.44B5EDA2.Up2Date

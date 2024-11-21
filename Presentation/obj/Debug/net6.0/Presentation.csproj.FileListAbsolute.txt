@@ -38,7 +38,6 @@
 /Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/staticwebassets.build.json
 /Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/staticwebassets.development.json
 /Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/scopedcss/bundle/Presentation.styles.css
-/Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/Presentation.csproj.CopyComplete
 /Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/Presentation.dll
 /Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/refint/Presentation.dll
 /Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/Presentation.pdb
@@ -111,3 +110,10 @@
 /Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/Newtonsoft.Json.Bson.dll
 /Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/Microsoft.AspNetCore.Identity.UI.dll
 /Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/Microsoft.Extensions.FileProviders.Embedded.dll
+/Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/Presentation.sourcelink.json
+/Users/quyen/dev/BookingTicket/Presentation/obj/Debug/net6.0/Presenta.BC777DBE.Up2Date
+/Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/HealthChecks.UI.Client.dll
+/Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/HealthChecks.UI.Core.dll
+/Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/HealthChecks.NpgSql.dll
+/Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/HealthChecks.Redis.dll
+/Users/quyen/dev/BookingTicket/Presentation/bin/Debug/net6.0/Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll

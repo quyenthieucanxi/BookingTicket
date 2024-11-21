@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eDvcKThvv4IeXkVmIvVGUe6CgzQhahvyhPxgFz88+mcRg8SqDOsL214c92alozJrb/9aYAZIl4//L80ExHkTjw==",
+  "dgSpecHash": "rebp0AG4eOn6ixuonH1NA7KB37RYKnw1mZKg82XKmjUvZx0H/YvmsmvRJGQNpsOK6iEZmUysb6zJuJuqI7S97Q==",
   "success": true,
   "projectFilePath": "/Users/quyen/dev/BookingTicket/Persistence/Persistence.csproj",
   "expectedPackageFiles": [
@@ -34,7 +34,9 @@
     "/Users/quyen/.nuget/packages/system.codedom/4.4.0/system.codedom.4.4.0.nupkg.sha512",
     "/Users/quyen/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/Users/quyen/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
-    "/Users/quyen/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512"
+    "/Users/quyen/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512",
+    "/Users/quyen/.nuget/packages/microsoft.netcore.app.ref/6.0.36/microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "/Users/quyen/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.36/microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512"
   ],
   "logs": []
 }

@@ -16,6 +16,7 @@
 /Users/quyen/dev/BookingTicket/Infrastructure/bin/Debug/net6.0/Persistence.dll
 /Users/quyen/dev/BookingTicket/Infrastructure/bin/Debug/net6.0/Persistence.pdb
 /Users/quyen/dev/BookingTicket/Infrastructure/bin/Debug/net6.0/Domain.pdb
-/Users/quyen/dev/BookingTicket/Infrastructure/obj/Debug/net6.0/Infrastructure.csproj.CopyComplete
 /Users/quyen/dev/BookingTicket/Infrastructure/bin/Debug/net6.0/Application.dll
 /Users/quyen/dev/BookingTicket/Infrastructure/bin/Debug/net6.0/Application.pdb
+/Users/quyen/dev/BookingTicket/Infrastructure/obj/Debug/net6.0/Infrastructure.sourcelink.json
+/Users/quyen/dev/BookingTicket/Infrastructure/obj/Debug/net6.0/Infrastr.15EFFBFE.Up2Date

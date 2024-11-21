@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1ackYmieW6wbW9QBmWKBIlQR1niTRIt6y/rENUQrFHmxJFVDcCarFOWnIlHU+9+BWPeuF8aLR/WlOI5Jp6cLqQ==",
+  "dgSpecHash": "nIVJ9LpkbTS+c4HkiDCuV+Bd0RPxRwuAElKxvU+pFzNCkNII79W1iaGZfb3KNoMmRWHw48FMs5k3Q6618eH9xA==",
   "success": true,
   "projectFilePath": "/Users/quyen/dev/BookingTicket/Application/Application.csproj",
   "expectedPackageFiles": [
@@ -37,7 +37,9 @@
     "/Users/quyen/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "/Users/quyen/.nuget/packages/system.collections.immutable/6.0.0/system.collections.immutable.6.0.0.nupkg.sha512",
     "/Users/quyen/.nuget/packages/system.diagnostics.diagnosticsource/6.0.1/system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512",
-    "/Users/quyen/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    "/Users/quyen/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "/Users/quyen/.nuget/packages/microsoft.netcore.app.ref/6.0.36/microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "/Users/quyen/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.36/microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512"
   ],
   "logs": []
 }
